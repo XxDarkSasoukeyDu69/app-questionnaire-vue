@@ -45,7 +45,7 @@ commencé a utilisé pushDb.
 ### Jour 2 :
 
 ```
-Objectif : finir le projet
+Objectif : finir le projet, utilisation de vuex
 
 Objectif atteind : pour l'instant aucun
 ```
