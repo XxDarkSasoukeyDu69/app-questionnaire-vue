@@ -47,5 +47,26 @@ commencé a utilisé pushDb.
 ```
 Objectif : finir le projet, utilisation de vuex
 
-Objectif atteind : pour l'instant aucun
+Objectif atteint : pour l'instant aucun
 ```
+
+##
+
+### Jour 3 :
+
+```
+Objectif : Finir
+
+Objectif atteint : chose finie
+
+- Ajout de vuex, passage des variable non plus par event bus, mais par vuex
+- Ajout d'un semblant d'authentification administrateur.
+- obliger de renseigner quelque chose pour pouvoir acceder aux routes administrateur
+- Correction de bug relatif à l'affichage du score final.
+- Affichage de tous les resultats a dans la zone admine
+
+```
+
+##
+
+### Lien production : [Cliquer ici](https://xxdarksasoukeydu69.github.io)
