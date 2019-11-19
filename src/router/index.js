@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Start from '../components/start'
 import Questionnaire from '../components/questionnaire'
 import Result from '../components/result'
+import ResultAdmin from '../components/admin/Resultat'
+import AddQuestionAdmin from '../components/admin/AddQuestion'
+import HomeAdmin from '../components/admin/Home'
 
 Vue.use(VueRouter)
 
@@ -13,14 +16,29 @@ const routes = [
     component: Start
   },
   {
-    path: '/questionnaire',
+    path: '/questionnaire/:userId',
     name: 'questionnaire',
     component: Questionnaire
   },
   {
-    path: '/result',
+    path: '/result/:userId',
     name: 'result',
     component: Result
+  },
+  {
+    path: '/admin/result',
+    name: 'resultat',
+    component: ResultAdmin
+  },
+  {
+    path: '/admin/add-question',
+    name: 'AddQuestion',
+    component: AddQuestionAdmin
+  },
+  {
+    path: '/admin/home',
+    name: 'Home',
+    component: HomeAdmin
   }
 ]
 

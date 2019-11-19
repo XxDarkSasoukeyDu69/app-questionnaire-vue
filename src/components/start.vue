@@ -7,7 +7,7 @@
                     <v-form ref="form" lazy-validation v-model="valid">
                         <v-text-field name="name" label="Prenom" v-model="name" class="mr-12 ml-12" color="primary" :rules="nameRules" required></v-text-field>
                         <v-text-field name="lastname" label="Nom" type="text" color="primary" class="mr-12 ml-12" v-model="lastname" :rules="lastnameRules" required></v-text-field>
-                        <v-text-field name="society" label="Société" type="text" color="primary" class="mr-12 ml-12" v-model="society" :rules="lastnameRules" required></v-text-field>
+                        <v-text-field name="society" label="Société" type="text" color="primary" class="mr-12 ml-12" v-model="company" :rules="companyRules" required></v-text-field>
                         <v-btn rounded color="primary" class="mt-12" @click="login()">Valider</v-btn>
                     </v-form>
                 </v-col>
@@ -21,9 +21,9 @@
 <script>
 
     import PouchDB from 'pouchdb'
-    import uuidv4 from 'uuid'
+    import uuid from 'uuid'
 
-    const db = new PouchDB('todos');
+    const db = new PouchDB('http://localhost:5984/control');
 
     export default {
 
@@ -34,8 +34,11 @@
                 nameRules: [
                     v => !!v || 'Un nom est requis !',
                 ],
+                company: '',
+                companyRules: [
+                  v => !!v || 'Un nom de société est requis'
+                ],
                 lastname: '',
-                society: '',
                 lastnameRules: [
                     v => !!v || 'Un nom de famille est requis !',
                 ],
@@ -49,22 +52,15 @@
             login() {
                 if (this.$refs.form.validate()) {
                     this.snackbar = true;
-                    var id = uuidv4()
+                    var id = uuid()
                     db.put({
                         _id: id,
                         name: this.name,
                         lastname: this.lastname,
                         society: this.society
                     });
-                    // eslint-disable-next-line no-console
-                    console.log(id)
-                    db.get(id).then(function(doc) {
-
-                        // eslint-disable-next-line no-console
-                        console.log(doc)
-
-                    })
-                    this.$router.push('/questionnaire')
+                    this.id = this.$route
+                    this.$router.push({name: 'questionnaire', params:  {userId: id}})
                 }
             },
 

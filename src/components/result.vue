@@ -1,66 +1,58 @@
 <template>
     <div>
-       <v-flex md8 offset-md2>
-           <v-row no-gutters>
-               <v-col :cols="12">
-                    <h1>Vos résultats</h1>
-                    <v-simple-table>
-                           <template v-slot:default>
-                               <thead>
-                               <tr class="mt-12 mb-12 pt-12 pb-12">
-                                   <th class="text-left">Question</th>
-                                   <th class="text-left">Réponse</th>
-                               </tr>
-                               </thead>
-                               <tbody>
-                               <tr v-for="item in question"  :key="item.ques">
-                                   <td>{{ item.ques }}</td>
-                                   <td>{{ item.resp }}</td>
-                               </tr>
-                               </tbody>
-                           </template>
-                    </v-simple-table>
-               </v-col>
-           </v-row>
-       </v-flex>
+        <v-flex md8 offset-md2>
+            <v-row no-gutters>
+                <v-col :cols="12" lg="5" md="5" offset-md="3" offset-lg="3">
+                    <v-card class="mt-12">
+                        <h1 class="pt-5 pl-5 pb-2">Vos résultats</h1>
+                        <hr />
+                        <v-card-title class="pl-5 pt-5 mt-12 mb-12"> Score : {{ score }}</v-card-title>
+                        <hr />
+                        <v-card-action>
+                            <v-btn color="primary" class="pt-2 pl-5 pb-2 mt-6 ml-5 mb-6">Menu</v-btn>
+                        </v-card-action>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-flex>
     </div>
 </template>
 
 <script>
-    // eslint-disable-next-line no-unused-vars
-    const jsonFile = require('../question/question')
-    const fs = require('fs')
-    export default {
 
+    import {EventBus} from '../service/EventBus'
+
+
+    var tabQuestion
+
+    export default {
         name: "result",
         data() {
             return {
-                question: [
-                    { ques: 'Pourquoi la vie est elle ainsi ?', resp: 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est le 1500, quand un imprimeur anofeuilles Letrexte, comme Aldus PageMaker.' },
-                    { ques: 'Pourquoi suis je beau ?', resp: 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est' },
-                    { ques: 'Que se passe t il après la mort ?', resp: 'szefzefgzefzefzef fgfzfze zzegf zefz efzeff fze' },
-                    { ques: 'Pourquoi les animaux ?', resp: 'ergrgergerge' },
-                    { ques: 'C\'est beau ?, resp: ', resp: 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est' },
-                    { ques: 'Pierrick ?', resp: 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est' },
-                    { ques: 'Ce control est chiant ?', resp: 'Le LoreLe Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum estm Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est' },
-                    { ques: 'ToDowORLd la best des app ?', resp: 'Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression. Le Lorem Ipsum est' },
-                    { ques: 'Ce questionnaire ne repond pas vraiment a la sécurité', resp: '' },
-                    { ques: 'Oui ? Ou non ?', resp: '' },
-                ],
+                id: '',
+                questions: null,
+                score: 0
             }
         },
         mounted() {
-            fs.readFile ('../question/question', 'utf8', (err, jsonString) => {
-                if (err) {
-                    // eslint-disable-next-line no-console
-                    console.log("Echec de la lecture du fichier:", err )
-                    return
-                }
-                // eslint-disable-next-line no-console
-                console.log('Données de fichier:', jsonString)
+            // eslint-disable-next-line no-undef
+            this.id = this.$route.params.userId
+            EventBus.$on('send-response', Questions => {
+                // eslint-disable-next-line no-console,no-undef
+                tabQuestion = Questions
+
             })
-        },
-        computed: {
+
+            this.questions = tabQuestion
+            // eslint-disable-next-line no-console
+            console.log('Question : ', this.questions)
+
+            this.questions.map(e => e.choice.map(a => {
+                // eslint-disable-next-line no-empty
+                if(a.statut === true) {
+                    this.score = this.score + a.score
+                }
+            }))
 
         }
     }
