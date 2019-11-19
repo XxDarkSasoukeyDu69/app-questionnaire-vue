@@ -66,7 +66,7 @@
                         _id: id,
                         name: this.name,
                         lastname: this.lastname,
-                        society: this.society
+                        society: this.company
                     });
                     this.id = this.$route
                     this.$router.push({name: 'questionnaire', params:  {userId: id}})

@@ -13,7 +13,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(item, key) in list" :key="key">
-                        <td>test</td>
+                        <td>{{item.user.society}}</td>
                         <td>{{item.user.name}}</td>
                         <td>{{item.user.lastname}}</td>
                         <td>{{item.questionnaireNote}}</td>
@@ -56,19 +56,14 @@
 
                         doc.tab.map(e => e.choice.map(a => {
                             if(a.statut === true) {
-                                // eslint-disable-next-line vue/no-side-effects-in-computed-properties
                                 score = score + a.score
                             }
                         }))
 
-                        // eslint-disable-next-line no-console
-                        console.log('score: ', score)
-
                         item.questionnaireNote = score
 
                         db.get(doc.user_id).then(function (user) {
-                            // eslint-disable-next-line no-console
-                            console.log(user)
+
                             item.user = user
                         })
                         d.list.push(item)
