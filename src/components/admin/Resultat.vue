@@ -1,6 +1,8 @@
 <template>
-    <div>
-        {{ questionnaire }}
+    <div class="container mt-12">
+        <div class="mt-12 mb-5">
+            <h2>Liste des résultats : </h2>
+        </div>
         <v-simple-table>
             <template v-slot:default>
                 <thead>
@@ -21,6 +23,10 @@
                 </tbody>
             </template>
         </v-simple-table>
+        <div class="mt-12">
+            <v-btn rounded to="/admin/home" color="primary">Retour</v-btn>
+            <v-btn rounded to="/" color="primary" class="ml-5">Questionnaire</v-btn>
+        </div>
     </div>
 </template>
 
@@ -36,6 +42,9 @@
                 list:[]
             }
         },
+        /**
+         * Quand je monte mon composant, je récupère toute mes infos questionnaires et le user
+         */
         mounted() {
 
             let d = this;
