@@ -61,31 +61,34 @@
             }
         },
         methods: {
+            /**
+             * Je valide mon formulaire en verifiant que mon formulaire est conforme aux regles definie dans data
+             */
            validate() {
-
-               // eslint-disable-next-line no-console
-               console.log(Json)
-
-               var obj = JSON.parse(Json)
-               // eslint-disable-next-line no-console
-               console.log(obj)
                if (this.$refs.form.validate()) {
                    this.snackbar = true;
                }
            },
+            /**
+             * Ma fonction de navigation, je n'utilise pas de routerLink par habitude, et pour différentes raisons.
+             * @param item
+             */
             navTo(item) {
                this.$router.push(item)
             }
         },
         mounted() {
-             var obj = Json[Json.length - 1];
 
-            // eslint-disable-next-line no-console
-             console.log(obj)
+            /**
+             * function qui check si je suis bien enregistrer.
+             */
+            if(this.$store.state.admin.pseudo === "") {
+                this.$router.push('/admin/login')
+            }
+
+             let obj = Json[Json.length - 1];
 
              this.lastId = obj.questions.id
-            // eslint-disable-next-line no-console
-             console.log(this.lastId)
         }
     }
 </script>

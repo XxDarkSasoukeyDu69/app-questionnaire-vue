@@ -9,13 +9,12 @@
                         <v-text-field name="lastname" label="Nom" type="text" color="primary" class="mr-12 ml-12" v-model="lastname" :rules="lastnameRules" required></v-text-field>
                         <v-text-field name="society" label="Société" type="text" color="primary" class="mr-12 ml-12" v-model="company" :rules="companyRules" required></v-text-field>
                         <v-btn rounded color="primary" class="mt-12" @click="login()">Valider</v-btn>
+                        <v-btn rounded color="primary" class="ml-5 mt-12" @click="navTo('/admin/login')">Admin zone</v-btn>
                     </v-form>
                 </v-col>
             </v-row>
         </v-flex>
     </div>
-
-
 </template>
 
 <script>
@@ -49,6 +48,16 @@
             }
         },
         methods: {
+            /**
+             * Ma fonction de navigation, je n'utilise pas de routerLink par habitude, et pour différentes raisons.
+             * @param item
+             */
+            navTo(item) {
+              this.$router.push(item)
+            },
+            /**
+             * fonction qui permet d'enregistrer utilisateur dans ma bdd avant d'acceder au questionnaire
+             */
             login() {
                 if (this.$refs.form.validate()) {
                     this.snackbar = true;
@@ -62,9 +71,7 @@
                     this.id = this.$route
                     this.$router.push({name: 'questionnaire', params:  {userId: id}})
                 }
-            },
-
-
+            }
         }
     }
 </script>

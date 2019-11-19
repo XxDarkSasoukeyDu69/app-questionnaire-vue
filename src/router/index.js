@@ -6,6 +6,7 @@ import Result from '../components/result'
 import ResultAdmin from '../components/admin/Resultat'
 import AddQuestionAdmin from '../components/admin/AddQuestion'
 import HomeAdmin from '../components/admin/Home'
+import LoginAdmin from '../components/admin/loginAdmin'
 
 Vue.use(VueRouter)
 
@@ -39,6 +40,11 @@ const routes = [
     path: '/admin/home',
     name: 'Home',
     component: HomeAdmin
+  },
+  {
+    path: '/admin/login',
+    name: 'LoginAdmin',
+    component: LoginAdmin
   }
 ]
 

@@ -6,10 +6,10 @@
                     <v-card class="mt-12">
                         <h1 class="pt-5 pl-5 pb-2">Vos résultats</h1>
                         <hr />
-                        <v-card-title class="pl-5 pt-5 mt-12 mb-12"> Score : {{ score }}</v-card-title>
+                        <v-card-title class="pl-5 pt-5 mt-12 mb-12"> Score :  {{ getResult }}</v-card-title>
                         <hr />
                         <v-card-action>
-                            <v-btn color="primary" class="pt-2 pl-5 pb-2 mt-6 ml-5 mb-6">Menu</v-btn>
+                            <v-btn color="primary" class="pt-2 pl-5 pb-2 mt-6 ml-5 mb-6" to="/">Menu</v-btn>
                         </v-card-action>
                     </v-card>
                 </v-col>
@@ -20,11 +20,6 @@
 
 <script>
 
-    import {EventBus} from '../service/EventBus'
-
-
-    var tabQuestion
-
     export default {
         name: "result",
         data() {
@@ -34,26 +29,33 @@
                 score: 0
             }
         },
-        mounted() {
-            // eslint-disable-next-line no-undef
-            this.id = this.$route.params.userId
-            EventBus.$on('send-response', Questions => {
-                // eslint-disable-next-line no-console,no-undef
-                tabQuestion = Questions
-
-            })
-
-            this.questions = tabQuestion
-            // eslint-disable-next-line no-console
-            console.log('Question : ', this.questions)
-
-            this.questions.map(e => e.choice.map(a => {
-                // eslint-disable-next-line no-empty
-                if(a.statut === true) {
-                    this.score = this.score + a.score
+        computed: {
+            getResult() {
+                /**
+                 * si je recharge ma page je suis rediréger vers la page connexion
+                 */
+                if (this.$store.state.questions.length === 0) {
+                    // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+                    this.$router.push('/')
                 }
-            }))
 
+                /**
+                 * Calcul mon score contenue dans mon store
+                 */
+                this.$store.state.questions.map(e => e.choice.map(a => {
+                    if(a.statut === true) {
+                        // eslint-disable-next-line vue/no-side-effects-in-computed-properties
+                        this.score = this.score + a.score
+                    }
+                }))
+                return this.score
+            }
+        },
+        /**
+         * Récupération de l'id contenue dans l'url
+         */
+        mounted() {
+            this.id = this.$route.params.userId
         }
     }
 </script>

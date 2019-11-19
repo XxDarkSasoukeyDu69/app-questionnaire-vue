@@ -3,7 +3,7 @@
         <h1 class="mb-5 mt-12 ml-1">Questionnaire :</h1>
         <v-stepper v-model="e1">
             <v-stepper-header>
-                <v-stepper-step :complete="e1 > key" :step="key+1" v-for="(ques,key) in questions" :key="key">{{ key+1 }}</v-stepper-step>
+                <v-stepper-step :complete="e1 > key" :step="key+1" v-for="(ques, key) in questions" :key="key">{{ key+1 }}</v-stepper-step>
             </v-stepper-header>
             <v-stepper-items>
                 <v-stepper-content :step="key+1" v-for="(ques,key) in questions" :key="key">
@@ -26,7 +26,6 @@
 <script>
 
     import Json from '../assets/questions'
-    import {EventBus} from '../service/EventBus'
     import PouchDB from 'pouchdb'
     const db = new PouchDB('http://localhost:5984/control')
 
@@ -47,16 +46,19 @@
             }
         },
         methods: {
+            /**
+             * Si je passe a la question 10 soit 9, j'enregistre mon questionnaire avec les réponse dans la bdd
+             * @param keys
+             */
             valide(keys) {
 
                 this.e1 = (keys+2)
 
                 if (keys == 9 ) {
 
-                    EventBus.$emit("send-response", this.questions)
+                    this.$store.dispatch("setQuestionnaire", this.questions)
 
-                    db.put({
-                        _id: 'questionnaire',
+                    db.post({
                         tab: this.questions,
                         user_id: this.id
                     })
@@ -68,11 +70,17 @@
             },
         },
         mounted() {
-            // eslint-disable-next-line no-undef
+
+            /**
+             * Récupération de mon userId que je passe de page en page, par l'url, pour la persistence
+             * @type {string}
+             */
             this.id = this.$route.params.userId
 
+            /**
+             * Renvoie 10 questions aléatoirement parmis une liste de 30 questions
+             */
             var shuffled = Json.questions.sort(function(){return .5 - Math.random()})
-
             this.questions = shuffled.slice(0,10)
 
         }

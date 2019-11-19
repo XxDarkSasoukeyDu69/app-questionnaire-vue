@@ -6,12 +6,27 @@
 </template>
 
 <script>
+
     export default {
         name: "Home",
         methods: {
+            /**
+             * Ma fonction de navigation, je n'utilise pas de routerLink par habitude, et pour différentes raisons.
+             * @param item
+             */
             navTo(item) {
                 this.$router.push(item)
             }
+        },
+        mounted() {
+
+            /**
+             * Fonction qui check si je suis bien connecter
+             */
+            if(this.$store.state.admin.pseudo === "") {
+                this.$router.push('/admin/login')
+            }
+
         }
     }
 </script>
