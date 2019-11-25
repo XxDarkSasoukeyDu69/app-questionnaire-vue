@@ -38,6 +38,13 @@ export default new Vuex.Store({
     },
     getLogin: state => {
       return state.admin
+    },
+    isLogin: state => {
+      if(state.admin.pseudo !== '' && state.admin.password !== '') {
+        return true
+      } else {
+        return false
+      }
     }
   },
   modules: {

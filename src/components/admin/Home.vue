@@ -17,16 +17,6 @@
             navTo(item) {
                 this.$router.push(item)
             }
-        },
-        mounted() {
-
-            /**
-             * Fonction qui check si je suis bien connecter
-             */
-            if(this.$store.state.admin.pseudo === "") {
-                this.$router.push('/admin/login')
-            }
-
         }
     }
 </script>

@@ -85,10 +85,6 @@
                 // eslint-disable-next-line no-console
                 console.log(err);
             });
-
-            if(this.$store.state.admin.pseudo === "") {
-                this.$router.push('/admin/login')
-            }
         }
     }
 </script>

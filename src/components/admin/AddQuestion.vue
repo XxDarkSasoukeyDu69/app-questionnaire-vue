@@ -79,13 +79,6 @@
         },
         mounted() {
 
-            /**
-             * function qui check si je suis bien enregistrer.
-             */
-            if(this.$store.state.admin.pseudo === "") {
-                this.$router.push('/admin/login')
-            }
-
              let obj = Json[Json.length - 1];
 
              this.lastId = obj.questions.id

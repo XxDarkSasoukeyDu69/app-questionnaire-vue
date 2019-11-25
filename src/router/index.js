@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import store from '../store/index'
 import Start from '../components/start'
 import Questionnaire from '../components/questionnaire'
 import Result from '../components/result'
@@ -29,17 +30,29 @@ const routes = [
   {
     path: '/admin/result',
     name: 'resultat',
-    component: ResultAdmin
+    component: ResultAdmin,
+    beforeEnter: (to, from, next) => {
+      if ( store.state.admin.password === '' || store.state.admin.pseudo === '') next(from)
+      else next()
+    }
   },
   {
     path: '/admin/add-question',
     name: 'AddQuestion',
-    component: AddQuestionAdmin
+    component: AddQuestionAdmin,
+    beforeEnter: (to, from, next) => {
+      if ( store.state.admin.password === '' || store.state.admin.pseudo === '') next(from)
+      else next()
+    }
   },
   {
     path: '/admin/home',
     name: 'Home',
-    component: HomeAdmin
+    component: HomeAdmin,
+    beforeEnter: (to, from, next) => {
+      if ( store.state.admin.password === '' || store.state.admin.pseudo === '') next(from)
+      else next()
+    }
   },
   {
     path: '/admin/login',
